@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: 'mysql:8.0'
+    container_name: 'spring_mysql_db'
+    environment:
+      - 'MYSQL_DATABASE=proiect_db'
+      - 'MYSQL_USER=razvan'
+      - 'MYSQL_PASSWORD=parola123'
+      - 'MYSQL_ROOT_PASSWORD=rootparola123'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

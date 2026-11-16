@@ -1,0 +1,14 @@
+Smart fleet
+
+aplicatie de gestiune parc auto + asistenta tehnica inteligenta
+
+
+-istoric mentenanta(revizii, schimb ulei, placute, etc)
+-specificatii tehnice despre masina(tip ulei, capacitate motor, etc)
+-agent ai pentru diagnoza( detectarea tipului defectiunii, estimare cost*)
+
+functionalitati:
+-register user si adaugare vehicule
+-evidenta programari service(trecute si viitoare)
+
+

@@ -1,0 +1,31 @@
+F2. Pre-Diagnosticare Automată cu Răspuns Structurat (Spring AI – Structured Output / POJO)
+Utilizatorul descrie o problemă într-un formular (ex: „Se aude un huruit pe față care crește în intensitate peste 60 km/h, mai ales în viraje”).
+
+Spring AI folosește BeanOutputConverter pentru a forța modelul llama3.2:1b să returneze strict un obiect Java (DiagnosticReportDto), nu text liber:
+
+Nivel de urgență: LOW, MEDIUM, CRITICAL (afișat cu badge verde/galben/roșu în UI).
+
+Cauze posibile: Listă de componente suspecte (ex. rulment roată, planetară).
+
+Cost estimativ (RON): Interval numeric.
+
+Recomandare tehnică: Text scurt care poate fi salvat direct ca notă într-o programare la service.
+
+F3. Asistent Tehnic pe Manuale PDF (Spring AI – RAG cu Qdrant VectorStore)
+Încărcarea manualelor de utilizare/reparație în format PDF.
+
+Spring AI sparge PDF-ul în fragmente (chunking), generează vectorii (embeddings) și îi salvează în containerul Qdrant.
+
+Când utilizatorul întreabă în chat: „Ce normă de ulei trebuie pentru motorul meu 1.9 TDI și la câți km se schimbă distribuția?”, aplicația extrage paragrafele exacte din Qdrant și le injectează în promptul modelului.
+
+F4. Agent AI capabil să execute acțiuni în MySQL (Spring AI – Tool Calling / Function Calling)
+Modelul LLM primește acces la 3 metode Java adnotate cu @Tool din serviciile tale Spring Boot:
+
+getVehicleStatus(Long vehicleId) – AI-ul își citește singur din MySQL câți kilometri are mașina și când a avut loc ultima revizie.
+
+updateVehicleMileage(Long vehicleId, int newMileage) – Dacă îi spui în chat „Am ajuns la 215.000 km azi”, AI-ul apelează metoda și îți actualizează automat kilometrajul în baza de date.
+
+scheduleMaintenance(Long vehicleId, String description, LocalDate date) – Dacă îi spui „Programează-mă vinerea viitoare pentru schimbul de plăcuțe”, AI-ul inserează singur programarea în tabelul din MySQL.
+
+F5. Conversație Contextuală pe Mașină (Spring AI – ChatMemory & Advisors)
+Fiecare mașină din garaj are propriul fir de conversație salvat în MySQL. Dacă săptămâna trecută ai discutat cu AI-ul despre o pierdere de antigel, azi își va aminti contextul fără să îi explici din nou.
