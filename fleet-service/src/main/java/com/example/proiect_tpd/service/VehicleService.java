@@ -6,6 +6,10 @@ import com.example.proiect_tpd.model.User;
 import com.example.proiect_tpd.model.Vehicle;
 import com.example.proiect_tpd.repository.UserRepository;
 import com.example.proiect_tpd.repository.VehicleRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +50,15 @@ public class VehicleService {
 
         // map to response DTO and return
         return mapToResponseDto(savedVehicle);
+    }
+
+
+    @Transactional
+    public List<VehicleResponseDto> getVehiclesByUser(User user) {
+        List<Vehicle> vehicles = vehicleRepository.findByUser(user);
+        return vehicles.stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
     }
 
     // method to map Vehicle entity to VehicleResponseDto
