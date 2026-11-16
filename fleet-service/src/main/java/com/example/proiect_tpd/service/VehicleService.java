@@ -6,23 +6,21 @@ import com.example.proiect_tpd.model.User;
 import com.example.proiect_tpd.model.Vehicle;
 import com.example.proiect_tpd.repository.UserRepository;
 import com.example.proiect_tpd.repository.VehicleRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class VehicleService {
 
 
     private final VehicleRepository vehicleRepository;
-    private final UserRepository userRepository;
 
-    public VehicleService(VehicleRepository vehicleRepository, UserRepository userRepository) {
+    public VehicleService(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
-        this.userRepository = userRepository;
     }
 
     @Transactional
-    public VehicleResponseDto createVehicle(VehicleRequestDto request) {
+    public VehicleResponseDto createVehicle(VehicleRequestDto request, User owner) {
 
         // verify if the VIN already exists in the database
         if (vehicleRepository.existsByVin(request.vin())) {
@@ -30,8 +28,6 @@ public class VehicleService {
         }
 
         // verify if the user exists in the database
-        User owner = userRepository.findById(request.userId())
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + request.userId() + " not found!"));
 
         // create a new Vehicle entity and set its properties from the request DTO
         Vehicle vehicle = new Vehicle();
